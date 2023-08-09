@@ -36,9 +36,10 @@ fun AnfibiosApp() {
                 .fillMaxSize()
                 .padding(it)
         ) {
-            val anfibiosViewModel: AnfibiosViewModel =
-                viewModel(factory = AnfibiosViewModel.Factory)
-            HomeScreen(anfibiosUiState = anfibiosViewModel.anfibiosUiState)
+            val anfibiosViewModel: AnfibiosViewModel = viewModel(factory = AnfibiosViewModel.Factory)
+            HomeScreen(anfibiosUiState = anfibiosViewModel.anfibiosUiState,
+                retryAction = anfibiosViewModel::getAnfibios
+            )
         }
     }
 }

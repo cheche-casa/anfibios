@@ -11,6 +11,7 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material3.Button
 import androidx.compose.material3.Card
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
@@ -34,12 +35,12 @@ import com.example.anfibios.ui.theme.AnfibiosTheme
 
 @Composable
 fun HomeScreen(
-    anfibiosUiState: AnfibiosUiState, modifier: Modifier = Modifier
+    anfibiosUiState: AnfibiosUiState, retryAction: () -> Unit, modifier: Modifier = Modifier
 ) {
     when (anfibiosUiState) { //No exemplo a parte de erro está distinta
         is AnfibiosUiState.Loading -> LoadingScreen(modifier = modifier.fillMaxSize())
         is AnfibiosUiState.Success -> AnfibiosListScreen(anfibiosUiState.anfibios, modifier.fillMaxSize())
-        is AnfibiosUiState.Error -> ErrorScreen(modifier = modifier.fillMaxSize())
+        is AnfibiosUiState.Error -> ErrorScreen(retryAction, modifier = modifier.fillMaxSize())
     }
 }
 
@@ -59,19 +60,31 @@ fun LoadingScreen(modifier: Modifier = Modifier) {
  * The home screen displaying error message with re-attempt button.
  */
 @Composable
-fun ErrorScreen(modifier: Modifier = Modifier) {
+//fun ErrorScreen(modifier: Modifier = Modifier) {
+//    Column(
+//        modifier = modifier,
+//        verticalArrangement = Arrangement.Center,
+//        horizontalAlignment = Alignment.CenterHorizontally
+//    ) {
+//        Image(
+//            painter = painterResource(id = R.drawable.ic_connection_error), contentDescription = ""
+//        )
+//        Text(text = stringResource(R.string.loading_failed), modifier = Modifier.padding(16.dp))
+//    }
+//}
+
+fun ErrorScreen(retryAction: () -> Unit, modifier: Modifier = Modifier) {
     Column(
         modifier = modifier,
         verticalArrangement = Arrangement.Center,
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
-        Image(
-            painter = painterResource(id = R.drawable.ic_connection_error), contentDescription = ""
-        )
-        Text(text = stringResource(R.string.loading_failed), modifier = Modifier.padding(16.dp))
+        Text(stringResource(R.string.loading_failed))
+        Button(onClick = retryAction) {
+            Text(stringResource(R.string.retry))
+        }
     }
 }
-
 @Composable
 fun AnfibiosCard(anfibio: Anfibio, modifier: Modifier = Modifier) {
     Card(
@@ -133,7 +146,7 @@ fun LoadingScreenPreview() {
 @Composable
 fun ErrorScreenPreview() {
     AnfibiosTheme {
-        ErrorScreen()
+        ErrorScreen({}, Modifier.fillMaxSize())
     }
 }
 
