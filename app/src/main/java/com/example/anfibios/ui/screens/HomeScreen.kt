@@ -60,19 +60,6 @@ fun LoadingScreen(modifier: Modifier = Modifier) {
  * The home screen displaying error message with re-attempt button.
  */
 @Composable
-//fun ErrorScreen(modifier: Modifier = Modifier) {
-//    Column(
-//        modifier = modifier,
-//        verticalArrangement = Arrangement.Center,
-//        horizontalAlignment = Alignment.CenterHorizontally
-//    ) {
-//        Image(
-//            painter = painterResource(id = R.drawable.ic_connection_error), contentDescription = ""
-//        )
-//        Text(text = stringResource(R.string.loading_failed), modifier = Modifier.padding(16.dp))
-//    }
-//}
-
 fun ErrorScreen(retryAction: () -> Unit, modifier: Modifier = Modifier) {
     Column(
         modifier = modifier,
